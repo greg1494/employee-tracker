@@ -1,19 +1,21 @@
 const mysql2 = require('mysql2');
 const inquirer = require('inquirer');
 
+
 const connection = mysql2.createConnection({
     host: 'localhost',
     port: '3306',
     user: 'root',
-    password: 'password',
+    password: 'Bulldawg14!',
     database: 'company_db'
 });
 
 connection.connect(err => {
     if (err) throw err
-    console.log(`connected as id$[connection.threadId]`)
+    console.log(`connected as id${connection.threadId}`)
     intro();
 })
+
 
 const choices = [
     'View All Employees',
@@ -29,8 +31,8 @@ const choices = [
 const intro = () => {
     inquirer.prompt([
         {
+            name:'action',
             type: 'list',
-            name: 'action',
             message: 'What would you like to do?',
             choices: choices
         }
@@ -94,20 +96,20 @@ const addEmployee = () => {
 
         const getPersonInfo = await inquirer.prompt([
             {
-                type: 'input',
                 name: 'firstName',
+                type: 'input',
                 message: "New employee's first name?"
             },
             {
-                type: 'input',
                 name: 'lastName',
+                type: 'input',
                 message: "New employee's last name?"
             },
             {
-                type: 'list',
                 name: 'manager',
                 message: "Who is the new employee's manager?",
-                choices: 'managers'
+                type: 'list',
+                choices: managers
             }
         ])
 
@@ -121,8 +123,8 @@ const addEmployee = () => {
 
             const getRole = await inquirer.prompt([
                 {
-                    type: 'list',
                     name: 'role',
+                    type: 'list',
                     message: "What is the new employee's role?",
                     choices: roles
                 }
@@ -157,8 +159,8 @@ const updateEmployeeRole = () => {
 
         const nameId = await (inquirer.prompt([
             {
-                type: 'list',
                 name: 'name',
+                type: 'list',
                 message: 'PLease choose the employee name you would like to update',
                 choices: names
             }
@@ -176,8 +178,8 @@ const updateEmployeeRole = () => {
 
             const roleId = await (inquirer.prompt ([
                 {
-                    type: 'list',
                     name: 'roleId',
+                    type: 'list',
                     message: 'Please choose a title for the employee', 
                     choices: roles
                 }
